@@ -1,28 +1,46 @@
 import os
 import requests
 
-def read_input(day):
-    path = f"inputs/day{day}.txt"
+def read_input(day, test=False):
+    folder = "inputs"
 
-    if not os.path.exists(path):
-        # Download input from adventofcode
-        url = f"https://adventofcode.com/2022/day/{day}/input"
+    if not os.path.exists(folder):
+        os.mkdir(folder)
 
-        # Get session ID and attach it as a cookie to the request
-        with open("secret.txt", "r", encoding="utf-8") as fp:
-            session_id = fp.readline().strip()
+    if test:
+        # Use test input
+        path = f"{folder}/day{day}_test.txt"
 
-        input_text = requests.get(url, cookies={"session": session_id}).text
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as fp:
+                input_text = [line.strip() for line in fp.readlines()]
 
-        # Write input text to file
-        with open(path, "w", encoding="utf-8") as fp:
-            fp.write(input_text)
-
-        input_text = [line.strip() for line in input_text.split("\n")]
+        else:
+            raise Exception(f"No test data exists (yet) for day {day}. Exiting...")
 
     else:
-        # Load already downloaded input text from file
-        with open(path, "r", encoding="utf-8") as fp:
-            input_text = [line.strip() for line in fp.readlines()]
+        # Use real input
+        path = f"{folder}/day{day}.txt"
+
+        if not os.path.exists(path):
+            # Download input from adventofcode
+            url = f"https://adventofcode.com/2022/day/{day}/input"
+
+            # Get session ID and attach it as a cookie to the request
+            with open("secret.txt", "r", encoding="utf-8") as fp:
+                session_id = fp.readline().strip()
+
+            input_text = requests.get(url, cookies={"session": session_id}).text
+
+            # Write input text to file
+            with open(path, "w", encoding="utf-8") as fp:
+                fp.write(input_text)
+
+            input_text = [line.strip() for line in input_text.split("\n")]
+
+        else:
+            # Load already downloaded input text from file
+            with open(path, "r", encoding="utf-8") as fp:
+                input_text = [line.strip() for line in fp.readlines()]
 
     return input_text
