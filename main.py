@@ -24,7 +24,7 @@ try:
             fp.write("def part_1(input_text):\n")
             fp.write("    print(input_text)\n\n")
             fp.write("def part_2(input_text):\n")
-            fp.write("    print(input_text)\n\n")
+            fp.write("    print(input_text)\n")
 
         # Download input text from adventofcode
         print("Downloading input text from adventofcode.com...")
