@@ -13,7 +13,7 @@ def read_input(day, test=False):
 
         if os.path.exists(path):
             with open(path, "r", encoding="utf-8") as fp:
-                input_text = [line.strip() for line in fp.readlines()]
+                input_text = [line.replace("\n", "") for line in fp.readlines()]
 
         else:
             raise Exception(f"No test data exists (yet) for day {day}. Exiting...")
