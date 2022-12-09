@@ -13,22 +13,25 @@ args = parser.parse_args()
 
 try:
     if args.task == "init":
-        path = f"code/day_{args.day}.py"
-        if os.path.exists(path):
-            print(f"Error: Python file already exists for day {args.day}. Exiting...")
-            exit(0)
+        code_path = f"code/day_{args.day}.py"
+        if os.path.exists(code_path):
+            print(f"Python file already exists for day {args.day}. Skipping...")
+        else:
+            # Create new .py file
+            print(f"Generating placeholder file at {code_path}...")
+            with open(code_path, "w", encoding="utf-8") as fp:
+                fp.write("def part_1(input_text):\n")
+                fp.write("    print(input_text)\n\n")
+                fp.write("def part_2(input_text):\n")
+                fp.write("    print(input_text)\n")
 
-        # Create new .py file
-        print(f"Generating placeholder file at {path}...")
-        with open(path, "w", encoding="utf-8") as fp:
-            fp.write("def part_1(input_text):\n")
-            fp.write("    print(input_text)\n\n")
-            fp.write("def part_2(input_text):\n")
-            fp.write("    print(input_text)\n")
-
-        # Download input text from adventofcode
-        print("Downloading input text from adventofcode.com...")
-        util.download_input(args.day)
+        input_path = f"inputs/day{args.day}.txt"
+        if os.path.exists(input_path):
+            print(f"Input file already exists for day {args.day}. Skipping...")
+        else:
+            # Download input text from adventofcode
+            print("Downloading input text from adventofcode.com...")
+            util.download_input(args.day)
 
     else:
         module = importlib.import_module(f"code.day_{args.day}")
