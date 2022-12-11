@@ -21,7 +21,7 @@ def read_input(day, test=False):
     else:
         # Use real input
         with open(f"{folder}/day{day}.txt", "r", encoding="utf-8") as fp:
-            input_text = [line.strip() for line in fp.readlines()]
+            input_text = [line.replace("\n", "") for line in fp.readlines()]
 
     return input_text
 
