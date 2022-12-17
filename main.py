@@ -2,6 +2,7 @@ import os
 import argparse
 import importlib
 import util
+import traceback
 
 parser = argparse.ArgumentParser()
 parser.add_argument("task", choices=("run", "init"))
@@ -43,3 +44,5 @@ except ModuleNotFoundError:
 
 except Exception as exc:
     print(f"Error: {' - '.join(exc.args)}. Exiting...")
+    print()
+    traceback.print_exc()
