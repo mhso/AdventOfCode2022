@@ -26,7 +26,7 @@ def parse_graph(input_text):
 def part_1(input_text):
     graph = parse_graph(input_text)
 
-    flow = networkx.flow.max_flow_min_cost(graph, "AA", SUPERSINK_NODE)
+    flow = networkx.flow.shortest_augmenting_path(graph, "AA", SUPERSINK_NODE)
     total = 0
     for node in flow:
         for v in flow[node].values():
